@@ -11,14 +11,31 @@ const ShoppingCartPage = () => {
     );
 
     if (selectedProduct) {
-      setCart((prev) => [...prev, selectedProduct]);
+      const isExistCertainProduct = cart.find(
+        (product) => product.id === productId
+      );
+
+      if (isExistCertainProduct) {
+        setCart((prev) =>
+          prev.map((product) =>
+            product.id === productId
+              ? { ...product, quantity: product.quantity! + 1 }
+              : product
+          )
+        );
+      } else {
+        setCart((prev) => [...prev, { ...selectedProduct, quantity: 1 }]);
+      }
     } else {
       alert("선택된 물품이 없습니다.");
     }
   };
 
   const calculateTotalPrice = () => {
-    return cart.reduce((total, product) => total + product.price, 0);
+    return cart.reduce(
+      (total, product) => total + product.price * product.quantity!,
+      0
+    );
   };
 
   return (
@@ -39,7 +56,7 @@ const ShoppingCartPage = () => {
       <ul>
         {cart.map((product) => (
           <li key={product.id}>
-            {product.name} - ${product.price}
+            {product.name} - ${product.price} X {product.quantity}
           </li>
         ))}
       </ul>
