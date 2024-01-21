@@ -1,5 +1,8 @@
+import type { Request, Response } from 'express'; 
+import PostModel from '../models/Post';
+
 class PostController {
-    async getAllPosts(req: Request, res: Response) {
+    public async getAllPosts(req: Request, res: Response): Promise<void> {
         try {
             const posts = await PostModel.find();
             res.json(posts);
@@ -7,6 +10,16 @@ class PostController {
             res.status(500).json({error: 'Internal Server Error'});
         }
     }
+
+    public async createPost(req: Request, res: Response): Promise<void> {
+        try {
+            const newPost = new PostModel(req.body);
+            const savedPost = await newPost.save();
+            res.json(savedPost);
+        } catch(error) {
+            res.status(500).json({error: 'Internal Server Error'});
+        }
+    }
 }
 
-module.exports = PostController;
+export default PostController;

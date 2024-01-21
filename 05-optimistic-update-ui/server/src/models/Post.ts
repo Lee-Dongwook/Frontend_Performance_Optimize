@@ -1,12 +1,8 @@
-const mongoose = require('mongoose');
-
-const { Schema, Document } = mongoose;
-
+import mongoose, {Schema, type Document} from 'mongoose';
 interface IPost extends Document {
   title: string;
   content: string;   
 }
-
 
 const PostSchema = new Schema({
     title: {type: String, required: true},
@@ -15,4 +11,4 @@ const PostSchema = new Schema({
 
 const PostModel = mongoose.model<IPost>('Post', PostSchema);
 
-module.exports = PostModel;
+export default PostModel;
