@@ -29,6 +29,9 @@ dependencies:
   '@types/react-dom':
     specifier: ^18.2.18
     version: 18.2.18
+  dotenv:
+    specifier: ^16.3.2
+    version: 16.3.2
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -4491,6 +4494,11 @@ packages:
   /dotenv@10.0.0:
     resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
     engines: {node: '>=10'}
+    dev: false
+
+  /dotenv@16.3.2:
+    resolution: {integrity: sha512-HTlk5nmhkm8F6JcdXvHIzaorzCoziNQT9mGxLPVXW8wJF1TiGSL60ZGB4gHWabHOaMmWmhvk2/lPHfnBiT78AQ==}
+    engines: {node: '>=12'}
     dev: false
 
   /duplexer@0.1.2:
