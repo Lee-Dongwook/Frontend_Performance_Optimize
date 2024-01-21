@@ -20,6 +20,40 @@ class PostController {
             res.status(500).json({error: 'Internal Server Error'});
         }
     }
+
+    public async updatePost(req: Request, res: Response): Promise<void> {
+        const postId = req.params.id;
+
+        try {
+            const updatedPost = await PostModel.findByIdAndUpdate(postId, req.body, {new: true});
+
+            if(!updatedPost) {
+                res.status(404).json({error: 'Post not found'});
+                return;
+            }
+
+            res.json(updatedPost);
+        } catch(error) {
+            res.status(500).json({error: 'Internal Server Error'});
+        }
+    }
+
+    public async deletePost(req: Request, res: Response): Promise<void> {
+        const postId = req.params.id;
+        
+        try {
+            const deletedPost = await PostModel.findByIdAndDelete(postId);
+
+            if(!deletedPost) {
+                res.status(404).json({error: 'Post not found'});
+                return;
+            }
+
+            res.json(deletedPost);
+        } catch(error) {
+            res.status(500).json({error: 'Internal Server Error'});
+        }
+    }
 }
 
 export default PostController;
