@@ -1,8 +1,6 @@
-import dotenv from 'dotenv';
 import type { Board } from '../00-domain';
-dotenv.config();
 
-const BASE_URL = process.env.BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const fetchPosts = async() => {
     const response = await fetch(`${BASE_URL}/api/posts`, {
