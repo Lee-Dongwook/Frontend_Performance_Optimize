@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQueryClient, type UseQueryResult } from "@tanstack/react-query";
 import type { Board } from "../00-domain";
 
@@ -19,6 +19,11 @@ export default function BoardPage() {
   const updatePostMutation = useUpdatePost(queryClient);
 
   const deletePostMutation = useDeletePost(queryClient);
+
+  const [newPost, setNewPost] = useState<Board>({
+    title: "",
+    content: "",
+  });
 
   const handleCreatePost = async (newPost: Board) => {
     try {
@@ -57,11 +62,27 @@ export default function BoardPage() {
             <li key={index}>
               <strong>{post.title}</strong>
               <p>{post.content}</p>
-              <button>Update</button>
-              <button>Delete</button>
+              <button onClick={() => handleUpdatePost(index, post)}>
+                Update
+              </button>
+              <button onClick={() => handleDeletePost(index)}>Delete</button>
             </li>
           ))}
       </ul>
+      <div>
+        <input
+          type="text"
+          value={newPost.title}
+          placeholder="제목"
+          onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+        />
+        <textarea
+          value={newPost.content}
+          placeholder="내용"
+          onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+        />
+        <button onClick={() => handleCreatePost(newPost)}>Create</button>
+      </div>
     </div>
   );
 }
