@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { Board } from '../00-domain';
+import type { Board } from '../00-domain';
 dotenv.config();
 
 const BASE_URL = process.env.BASE_URL;
@@ -38,7 +38,7 @@ export const createPost = async(newPost: Board) => {
     }
 }
 
-export const updatePost = async(id: number, updatedPost: Board) => {
+export const updatePost = async({id, updatedPost}: {id: number, updatedPost: Board}) => {
     const response = await fetch(`${BASE_URL}/api/posts/${id}`,{
         method: 'PUT',
         headers: {

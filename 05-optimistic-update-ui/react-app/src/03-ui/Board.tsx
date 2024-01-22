@@ -1,5 +1,5 @@
 import React from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, type UseQueryResult } from "@tanstack/react-query";
 import type { Board } from "../00-domain";
 
 import {
@@ -12,7 +12,7 @@ import {
 export default function BoardPage() {
   const queryClient = useQueryClient();
 
-  const { data: posts } = useFetchPosts();
+  const { data: posts }: UseQueryResult<Board[]> = useFetchPosts();
 
   const createPostMutation = useCreatePost(queryClient);
 
@@ -21,30 +21,31 @@ export default function BoardPage() {
   const deletePostMutation = useDeletePost(queryClient);
 
   const handleCreatePost = async (newPost: Board) => {
-    await createPostMutation.mutateAsync(newPost, {
-      onSuccess: () => {
-        queryClient.invalidateQueries("posts");
-      },
-    });
+    try {
+      const result = await createPostMutation.mutateAsync(newPost);
+      console.log("게시물이 성공적으로 생성되었습니다.", result);
+    } catch (error) {
+      console.error("게시물 생성 중 오류", error);
+    }
   };
 
   const handleUpdatePost = async (id: number, updatedPost: Board) => {
-    await updatePostMutation.mutateAsync(
-      { id, updatedPost },
-      {
-        onSucess: () => {
-          queryClient.invalidateQueries("posts");
-        },
-      }
-    );
+    try {
+      const result = await updatePostMutation.mutateAsync({ id, updatedPost });
+
+      console.log("게시물이 성공적으로 수정되었습니다.", result);
+    } catch (error) {
+      console.error("게시물 수정 중 오류", error);
+    }
   };
 
   const handleDeletePost = async (id: number) => {
-    await deletePostMutation.mutateAsync(id, {
-      onSucess: () => {
-        queryClient.invalidateQueries("posts");
-      },
-    });
+    try {
+      const result = await deletePostMutation.mutateAsync(id);
+      console.log("게시물이 성공적으로 삭제 되었습니다.", result);
+    } catch (error) {
+      console.error("게시물 삭제 중 오류", error);
+    }
   };
 
   return (
