@@ -4,6 +4,7 @@ import { UseId } from "./components/useId";
 import { UseLayoutEffect } from "./components/useLayoutEffect";
 import { UseTransition } from "./components/useTransition";
 import { UseDeferredValue } from "./components/useDeferredValue";
+import { UseSyncExternalStore } from "./components/useSyncExternalStore";
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
         <Route path="/useLayoutEffect" element={<UseLayoutEffect />} />
         <Route path="/useTransition" element={<UseTransition />} />
         <Route path="/useDeferredValue" element={<UseDeferredValue />} />
+        <Route
+          path="/useSyncExternalStore"
+          element={<UseSyncExternalStore />}
+        />
       </Routes>
     </Router>
   );
